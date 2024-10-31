@@ -1,0 +1,65 @@
+Name: SubPages
+Type: FolderType
+Children:
+- Name: Screen4
+  Id: g=0e076d51759312b9337a99a799e16c02
+  Supertype: ScreenWithID
+  ReferenceType: HasComponent
+  Children:
+  - Name: ID_Pagina
+    Type: BaseDataVariableType
+    DataType: Int32
+    Value: 4
+  - Name: Label1
+    Type: Label
+    Children:
+    - Name: Text
+      Type: BaseDataVariableType
+      DataType: LocalizedText
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "../..@BrowseName"
+  - Name: ActualPageToPLC
+    Type: NetLogic
+    Children:
+    - Name: Model_Page_ID
+      Type: BaseDataVariableType
+      DataType: Int32
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "/Objects/Omnia_WPE_NPE_Synchro/Model/ActualPage"
+- Name: Screen5
+  Id: g=86b54da29c65aa18ec4403fe4eb209c7
+  Supertype: ScreenWithID
+  ReferenceType: HasComponent
+  Children:
+  - Name: ID_Pagina
+    Type: BaseDataVariableType
+    DataType: Int32
+    Value: 5
+  - Name: Label1
+    Type: Label
+    Children:
+    - Name: Text
+      Type: BaseDataVariableType
+      DataType: LocalizedText
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "../..@BrowseName"
+  - Name: ActualPageToPLC
+    Type: NetLogic
+    Children:
+    - Name: Model_Page_ID
+      Type: BaseDataVariableType
+      DataType: Int32
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "/Objects/Omnia_WPE_NPE_Synchro/Model/ActualPage"

@@ -1,0 +1,49 @@
+Name: MyTypes
+Type: FolderType
+Children:
+- Name: ScreenWithID
+  Id: g=6f600e8765556607d4e571d7a92645e1
+  Supertype: Screen
+  ReferenceType: HasComponent
+  Children:
+  - Name: ID_Pagina
+    Type: BaseDataVariableType
+    DataType: Int32
+  - Name: Label1
+    Type: Label
+    Children:
+    - Name: Text
+      Type: BaseDataVariableType
+      DataType: LocalizedText
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "../..@BrowseName"
+    - Name: HorizontalAlignment
+      Type: BaseVariableType
+      DataType: HorizontalAlignment
+      ModellingRule: Optional
+      Value: 2
+    - Name: FontSize
+      Type: BaseDataVariableType
+      DataType: Size
+      ModellingRule: Optional
+      Value: 20.0
+  - Name: ActualPageToPLC
+    Type: NetLogic
+    Children:
+    - Name: Model_Page_ID
+      Type: BaseDataVariableType
+      DataType: Int32
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "/Objects/Omnia_WPE_NPE_Synchro/Model/ActualPage"
+        Children:
+        - Name: Mode
+          Type: BaseVariableType
+          DataType: DynamicLinkMode
+          ModellingRule: Optional
+          Value: 2

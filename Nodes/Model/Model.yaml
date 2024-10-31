@@ -1,0 +1,9 @@
+Name: Model
+Type: ModelCategoryFolder
+Children:
+- Name: ActualPage
+  Type: BaseDataVariableType
+  DataType: Int32
+- Name: Synchro
+  Type: BaseDataVariableType
+  DataType: Boolean
