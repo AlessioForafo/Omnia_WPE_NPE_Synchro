@@ -25,33 +25,56 @@ public class DialogsManager : BaseNetLogic
     {
         synchDialogsWithAllSessions = LogicObject.GetVariable("SynchDialogsWithAllSessions");
         synchedDialogIDs = LogicObject.GetVariable("SynchedDialogIDs");
+
+        synchDialogsWithAllSessions.VariableChange += SynchDataChanged;
+        synchedDialogIDs.VariableChange += SynchDataChanged;
+    }
+
+    private void SynchDataChanged(object sender, VariableChangeEventArgs e)
+    {
+        SynchDialogsBetweenSessions();
     }
 
     public override void Stop()
     {
-        // Insert code to be executed when the user-defined logic is stopped
+        synchDialogsWithAllSessions.VariableChange -= SynchDataChanged;
+        synchedDialogIDs.VariableChange -= SynchDataChanged;
     }
 
     [ExportMethod]
-    public void SynchDialogInstances()
+    public void SynchDialogsBetweenSessions()
     {
         if (!synchDialogsWithAllSessions.Value) return;
-        var dialogs = Project.Current.Get("UI").FindNodesByType<DialogType>();
-        //OpenDialogs(dialogs);
+
+        var dialogAlreadyOpenedInUISession = Session.Get("UIRoot").Children.OfType<Dialog>();
+        int[] openDialogsIds = GetOpenDialogIds();
+
+        foreach (var openDialogId in openDialogsIds)
+        {
+            if (openDialogId == emptyDialogIdsArrayElementIndex || dialogAlreadyOpenedInUISession.Any(d => d.GetVariable(DIALOGID).Value == openDialogId)) continue;
+            var d = GetDialogById(openDialogId);
+            UICommands.OpenDialog(Owner, d);
+        }
+
+        foreach (var dialog in dialogAlreadyOpenedInUISession)
+        {
+            if (openDialogsIds.Contains(dialog.GetVariable(DIALOGID).Value)) continue;
+            dialog.Close();
+        }
     }
 
     [ExportMethod]
     public void OnOpenDialog(int dialogId)
     {
         if (IsDialogAlreadyOpen(dialogId)) return;
-        UpdateOpenDialogs(dialogId);
+        AddDialogIdToDialogsArray(dialogId);
     }
 
     [ExportMethod]
     public void OnCloseDialog(int dialogId)
     {
-        if (IsDialogAlreadyClosed(dialogId)) return;
-        RemoveDialogIDFromDialogArray(dialogId);
+        if (!IsDialogAlreadyOpen(dialogId)) return;
+        RemoveDialogIdToDialogsArray(dialogId);
     }
 
     private DialogType GetDialogById(int dialogId)
@@ -61,39 +84,37 @@ public class DialogsManager : BaseNetLogic
         return dialog;
     }
 
-    private bool IsDialogAlreadyOpen(UAValue value)
+    private bool IsDialogAlreadyOpen(UAValue dialogId)
     {
-        int[] dialogIds = synchedDialogIDs.Value.Value as int[];
-        return Array.IndexOf(dialogIds, value) != -1;
+        return Session.Get("UIRoot").Children.OfType<Dialog>().Any(d => d.GetVariable(DIALOGID).Value == dialogId);
     }
 
-    private bool IsDialogAlreadyClosed(UAValue value)
+    private int[] GetOpenDialogIds() => synchedDialogIDs.Value.Value as int[];
+
+    private void AddDialogIdToDialogsArray(int dialogId)
     {
-        int[] dialogIds = synchedDialogIDs.Value.Value as int[];
-        return Array.IndexOf(dialogIds, value) == -1;
-    }
+        int[] openDialogsIds = GetOpenDialogIds();
 
-    private void UpdateOpenDialogs(int dialogId)
-    {
-        int[] dialogIds = synchedDialogIDs.Value.Value as int[];
-        dialogIds = RemoveDuplicatesAndMark(dialogIds);
+        int firstAvailableArrayElement = Array.IndexOf(openDialogsIds, emptyDialogIdsArrayElementIndex);
+        openDialogsIds[firstAvailableArrayElement] = dialogId;
 
-        int firstAvailableArrayElement = Array.IndexOf(dialogIds, emptyDialogIdsArrayElementIndex);
-        dialogIds[firstAvailableArrayElement] = dialogId;
-
-        synchedDialogIDs.Value = dialogIds;
+        synchedDialogIDs.Value = openDialogsIds;
+        openDialogsIds = RemoveDuplicatesAndMark(openDialogsIds);
         UICommands.OpenDialog(Owner, GetDialogById(dialogId));
     }
 
-    private void RemoveDialogIDFromDialogArray(int dialogId)
+    private void RemoveDialogIdToDialogsArray(int dialogId)
     {
-        int[] dialogIds = synchedDialogIDs.Value.Value as int[];
-        dialogIds = RemoveDuplicatesAndMark(dialogIds);
+        int[] openDialogsIds = GetOpenDialogIds();
+        openDialogsIds = RemoveDuplicatesAndMark(openDialogsIds);
 
-        int indexToRemove = Array.IndexOf(dialogIds, dialogId);
-        dialogIds[indexToRemove] = emptyDialogIdsArrayElementIndex;
+        int indexToRemove = Array.IndexOf(openDialogsIds, dialogId);
+        if (indexToRemove != -1)
+        {
+            openDialogsIds[indexToRemove] = emptyDialogIdsArrayElementIndex;
+        }
 
-        synchedDialogIDs.Value = dialogIds;
+        synchedDialogIDs.Value = openDialogsIds;
         CloseDialogInstance(dialogId);
     }
 
@@ -119,14 +140,5 @@ public class DialogsManager : BaseNetLogic
         return arr;
     }
 
-    private void OpenDialogs(System.Collections.Generic.IEnumerable<DialogType> dialogs)
-    {
-        foreach (DialogType d in dialogs)
-        {
-            var dialogID = d.GetVariable(DIALOGID).Value;
-            if (dialogID == null || dialogID == emptyDialogIdsArrayElementIndex) return;
-            if (Array.IndexOf(synchedDialogIDs.Value.Value as Array, dialogID) == -1) return;
-            UICommands.OpenDialog(Owner, d);
-        }
-    }
+
 }
