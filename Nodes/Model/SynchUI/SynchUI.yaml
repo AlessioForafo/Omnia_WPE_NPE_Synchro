@@ -1,0 +1,17 @@
+Name: SynchUI
+Type: FolderType
+Children:
+- Name: SynchedScreenID
+  Type: BaseDataVariableType
+  DataType: Int32
+- Name: SynchScreenWithAllSessions
+  Type: BaseDataVariableType
+  DataType: Boolean
+- Name: SynchedDialogIDs
+  Type: BaseDataVariableType
+  DataType: Int32
+  ValueRank: OneDimension
+  ArrayDimensions: [20]
+- Name: SynchDialogsWithAllSessions
+  Type: BaseDataVariableType
+  DataType: Boolean

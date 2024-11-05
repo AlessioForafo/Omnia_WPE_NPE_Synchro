@@ -6,7 +6,7 @@ Children:
   Supertype: ScreenWithID
   ReferenceType: HasComponent
   Children:
-  - Name: ID_Pagina
+  - Name: ScreenID
     Type: BaseDataVariableType
     DataType: Int32
     Value: 4
@@ -21,23 +21,31 @@ Children:
         Type: DynamicLink
         DataType: NodePath
         Value: "../..@BrowseName"
-  - Name: ActualPageToPLC
+  - Name: SynchScreenID
     Type: NetLogic
     Children:
-    - Name: Model_Page_ID
+    - Name: ModelActualScreenID
       Type: BaseDataVariableType
       DataType: Int32
       Children:
       - Name: DynamicLink
         Type: DynamicLink
         DataType: NodePath
-        Value: "/Objects/Omnia_WPE_NPE_Synchro/Model/ActualPage"
+        Value: "/Objects/Omnia_WPE_NPE_Synchro/Model/SynchUI/SynchedScreenID"
+    - Name: ScreenID
+      Type: BaseDataVariableType
+      DataType: Int32
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "../../ScreenID"
 - Name: Screen5
   Id: g=86b54da29c65aa18ec4403fe4eb209c7
   Supertype: ScreenWithID
   ReferenceType: HasComponent
   Children:
-  - Name: ID_Pagina
+  - Name: ScreenID
     Type: BaseDataVariableType
     DataType: Int32
     Value: 5
@@ -52,14 +60,22 @@ Children:
         Type: DynamicLink
         DataType: NodePath
         Value: "../..@BrowseName"
-  - Name: ActualPageToPLC
+  - Name: SynchScreenID
     Type: NetLogic
     Children:
-    - Name: Model_Page_ID
+    - Name: ModelActualScreenID
       Type: BaseDataVariableType
       DataType: Int32
       Children:
       - Name: DynamicLink
         Type: DynamicLink
         DataType: NodePath
-        Value: "/Objects/Omnia_WPE_NPE_Synchro/Model/ActualPage"
+        Value: "/Objects/Omnia_WPE_NPE_Synchro/Model/SynchUI/SynchedScreenID"
+    - Name: ScreenID
+      Type: BaseDataVariableType
+      DataType: Int32
+      Children:
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "../../ScreenID"

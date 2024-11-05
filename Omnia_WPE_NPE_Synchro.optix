@@ -66,15 +66,15 @@ Project:
    Module: FTOptix.WebUI.Net
    Version: 1.2
  Statistics:
-  TotalNodeCount: 397
-  Objects: 124
-  ObjectTypes: 7
-  Variables: 266
+  TotalNodeCount: 790
+  Objects: 195
+  ObjectTypes: 10
+  Variables: 581
   VariableTypes: 0
   DataTypes: 0
-  Methods: 0
-  References: 6
+  Methods: 4
+  References: 16
   ReferenceTypes: 0
-  Files: 22
+  Files: 24
  Nodes:
  - File: Nodes/Omnia_WPE_NPE_Synchro.yaml

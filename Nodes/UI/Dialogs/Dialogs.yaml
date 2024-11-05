@@ -1,147 +1,24 @@
-Name: MyTypes
+Name: Dialogs
 Type: FolderType
 Children:
-- Name: ScreenWithID
-  Id: g=6f600e8765556607d4e571d7a92645e1
-  Supertype: Screen
-  ReferenceType: HasComponent
-  Children:
-  - Name: ScreenID
-    Type: BaseDataVariableType
-    DataType: Int32
-  - Name: Label1
-    Type: Label
-    Children:
-    - Name: Text
-      Type: BaseDataVariableType
-      DataType: LocalizedText
-      Children:
-      - Name: DynamicLink
-        Type: DynamicLink
-        DataType: NodePath
-        Value: "../..@BrowseName"
-    - Name: HorizontalAlignment
-      Type: BaseVariableType
-      DataType: HorizontalAlignment
-      ModellingRule: Optional
-      Value: 2
-    - Name: FontSize
-      Type: BaseDataVariableType
-      DataType: Size
-      ModellingRule: Optional
-      Value: 50.0
-    - Name: VerticalAlignment
-      Type: BaseVariableType
-      DataType: VerticalAlignment
-      ModellingRule: Optional
-      Value: 2
-  - Name: SynchScreenID
-    Type: NetLogic
-    Children:
-    - Name: ModelActualScreenID
-      Type: BaseDataVariableType
-      DataType: Int32
-      Children:
-      - Name: DynamicLink
-        Type: DynamicLink
-        DataType: NodePath
-        Value: "/Objects/Omnia_WPE_NPE_Synchro/Model/SynchUI/SynchedScreenID"
-        Children:
-        - Name: Mode
-          Type: BaseVariableType
-          DataType: DynamicLinkMode
-          ModellingRule: Optional
-          Value: 2
-    - Name: ScreenID
-      Type: BaseDataVariableType
-      DataType: Int32
-      Children:
-      - Name: DynamicLink
-        Type: DynamicLink
-        DataType: NodePath
-        Value: "../../ScreenID"
-        Children:
-        - Name: Mode
-          Type: BaseVariableType
-          DataType: DynamicLinkMode
-          ModellingRule: Optional
-          Value: 2
-- Name: DialogWithID
-  Id: g=22ef9ff4c6d03cdb65257d959f657580
-  Supertype: Dialog
+- Name: DialogWithID1
+  Id: g=1588704f4766e88acd9c6b0e05bf0f27
+  Supertype: DialogWithID
   ReferenceType: HasComponent
   Children:
   - Class: Reference
     Target: ns=5;i=519
     Direction: Forward
-  - Name: Width
-    Type: BaseVariableType
-    DataType: Size
-    ModellingRule: Optional
-    Value: 300.0
-  - Name: Height
-    Type: BaseVariableType
-    DataType: Size
-    ModellingRule: Optional
-    Value: 300.0
   - Name: DialogID
     Type: BaseDataVariableType
     DataType: Int32
+    Value: 1
   - Name: Wrapper
     Type: Rectangle
     Children:
-    - Name: Width
-      Type: BaseVariableType
-      DataType: Size
-      ModellingRule: Optional
-      Value: 50.0
-    - Name: Height
-      Type: BaseVariableType
-      DataType: Size
-      ModellingRule: Optional
-      Value: 50.0
-    - Name: BorderThickness
-      Type: BaseDataVariableType
-      DataType: Size
-      ModellingRule: Optional
-    - Name: HorizontalAlignment
-      Type: BaseVariableType
-      DataType: HorizontalAlignment
-      ModellingRule: Optional
-      Value: 3
-    - Name: VerticalAlignment
-      Type: BaseVariableType
-      DataType: VerticalAlignment
-      ModellingRule: Optional
-      Value: 3
     - Name: CloseDialogBtn
       Type: Button
       Children:
-      - Name: Text
-        Type: BaseDataVariableType
-        DataType: LocalizedText
-        ModellingRule: Optional
-        Value: {"LocaleId":"en-US","Text":"close"}
-      - Name: HorizontalAlignment
-        Type: BaseVariableType
-        DataType: HorizontalAlignment
-        ModellingRule: Optional
-        Value: 2
-      - Name: VerticalAlignment
-        Type: BaseVariableType
-        DataType: VerticalAlignment
-        ModellingRule: Optional
-        Value: 2
-      - Name: Width
-        Type: BaseVariableType
-        DataType: Size
-        ModellingRule: Optional
-        Value: 99.0
-      - Name: Height
-        Type: BaseVariableType
-        DataType: Size
-        ModellingRule: Optional
-        Value: 59.0
       - Name: MouseClickEventHandler1
         Type: EventHandler
         Children:
@@ -155,7 +32,7 @@ Children:
           - Name: MethodContainer2
             Type: BaseObjectType
             Children:
-            - Name: ns=3;ObjectPointer
+            - Name: ObjectPointer
               Type: NodePointer
               DataType: NodeId
               Children:
@@ -167,13 +44,165 @@ Children:
                 Type: DynamicLink
                 DataType: NodePath
                 Value: "../../../../../../OnClose@NodeId"
-                Children:
-                - Name: Mode
-                  Type: BaseVariableType
-                  DataType: DynamicLinkMode
-                  ModellingRule: Optional
-                  Value: 2
-            - Name: ns=3;Method
+            - Name: Method
+              Type: BaseDataVariableType
+              DataType: String
+              Value: "Invoke"
+        - Name: EventArguments
+          Type: MouseClickEvent
+          Children:
+          - Name: EventId
+            Type: PropertyType
+            DataType: ByteString
+          - Name: EventType
+            Type: PropertyType
+            DataType: NodeId
+          - Name: SourceNode
+            Type: PropertyType
+            DataType: NodeId
+          - Name: SourceName
+            Type: PropertyType
+            DataType: String
+          - Name: Time
+            Type: PropertyType
+            DataType: UtcTime
+          - Name: ReceiveTime
+            Type: PropertyType
+            DataType: UtcTime
+          - Name: Message
+            Type: PropertyType
+            DataType: LocalizedText
+          - Name: Severity
+            Type: PropertyType
+            DataType: UInt16
+  - Name: SynchedDialogIDs
+    Type: BaseDataVariableType
+    DataType: Int32
+    ValueRank: OneDimension
+    ArrayDimensions: [20]
+    Children:
+    - Name: DynamicLink
+      Type: DynamicLink
+      DataType: NodePath
+      Value: "/Objects/Omnia_WPE_NPE_Synchro/Model/SynchUI/SynchedDialogIDs"
+  - Name: OnOpen
+    Type: MethodInvocation
+    Children:
+    - Name: ObjectPointer
+      Type: NodePointer
+      DataType: NodeId
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+        Value: "/Types/ObjectTypes/BaseObjectType"
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{Window}/DialogsManager@NodeId"
+    - Name: Method
+      Type: BaseDataVariableType
+      DataType: String
+      Value: "OnOpenDialog"
+    - Class: Reference
+      Target: ns=3;i=98
+      Direction: Forward
+    - Name: InputArguments
+      Type: BaseObjectType
+      Children:
+      - Name: dialogId
+        Type: BaseDataVariableType
+        DataType: Int32
+        Children:
+        - Name: DynamicLink
+          Type: DynamicLink
+          DataType: NodePath
+          Value: "../../../DialogID"
+  - Name: OnClose
+    Type: MethodInvocation
+    Children:
+    - Name: ObjectPointer
+      Type: NodePointer
+      DataType: NodeId
+      Children:
+      - Name: Kind
+        Type: PropertyType
+        DataType: NodeId
+        Value: "/Types/ObjectTypes/BaseObjectType"
+      - Name: DynamicLink
+        Type: DynamicLink
+        DataType: NodePath
+        Value: "{Window}/DialogsManager@NodeId"
+    - Name: Method
+      Type: BaseDataVariableType
+      DataType: String
+      Value: "OnCloseDialog"
+    - Class: Reference
+      Target: ns=3;i=98
+      Direction: Forward
+    - Name: InputArguments
+      Type: BaseObjectType
+      Children:
+      - Name: dialogId
+        Type: BaseDataVariableType
+        DataType: Int32
+        Children:
+        - Name: DynamicLink2
+          Type: DynamicLink
+          DataType: NodePath
+          Value: "../../../DialogID"
+  - Name: MoveTarget
+    Type: NodePointer
+    DataType: NodeId
+    Children:
+    - Name: DynamicLink
+      Type: DynamicLink
+      DataType: NodePath
+      Value: "..@NodeId"
+- Name: DialogWithID2
+  Id: g=e52518e78fce2f7d5e477e9da17132b1
+  Supertype: DialogWithID
+  ReferenceType: HasComponent
+  Children:
+  - Class: Reference
+    Target: ns=5;i=519
+    Direction: Forward
+  - Name: DialogID
+    Type: BaseDataVariableType
+    DataType: Int32
+    Value: 2
+  - Name: Wrapper
+    Type: Rectangle
+    Children:
+    - Name: CloseDialogBtn
+      Type: Button
+      Children:
+      - Name: MouseClickEventHandler1
+        Type: EventHandler
+        Children:
+        - Name: ListenEventType
+          Type: PropertyType
+          DataType: NodeId
+          Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+        - Name: MethodsToCall
+          Type: BaseObjectType
+          Children:
+          - Name: MethodContainer2
+            Type: BaseObjectType
+            Children:
+            - Name: ObjectPointer
+              Type: NodePointer
+              DataType: NodeId
+              Children:
+              - Name: Kind
+                Type: PropertyType
+                DataType: NodeId
+                Value: "/Types/ObjectTypes/BaseObjectType"
+              - Name: DynamicLink
+                Type: DynamicLink
+                DataType: NodePath
+                Value: "../../../../../../OnClose@NodeId"
+            - Name: Method
               Type: BaseDataVariableType
               DataType: String
               Value: "Invoke"
@@ -208,7 +237,7 @@ Children:
       Type: BaseDataVariableType
       DataType: Color
       ModellingRule: Optional
-      Value: "#0000ff"
+      Value: "#ff0000"
   - Name: SynchedDialogIDs
     Type: BaseDataVariableType
     DataType: Int32
@@ -219,12 +248,6 @@ Children:
       Type: DynamicLink
       DataType: NodePath
       Value: "/Objects/Omnia_WPE_NPE_Synchro/Model/SynchUI/SynchedDialogIDs"
-      Children:
-      - Name: Mode
-        Type: BaseVariableType
-        DataType: DynamicLinkMode
-        ModellingRule: Optional
-        Value: 2
   - Name: OnOpen
     Type: MethodInvocation
     Children:
@@ -240,12 +263,6 @@ Children:
         Type: DynamicLink
         DataType: NodePath
         Value: "{Window}/DialogsManager@NodeId"
-        Children:
-        - Name: Mode
-          Type: BaseVariableType
-          DataType: DynamicLinkMode
-          ModellingRule: Optional
-          Value: 2
     - Name: Method
       Type: BaseDataVariableType
       DataType: String
@@ -279,12 +296,6 @@ Children:
         Type: DynamicLink
         DataType: NodePath
         Value: "{Window}/DialogsManager@NodeId"
-        Children:
-        - Name: Mode
-          Type: BaseVariableType
-          DataType: DynamicLinkMode
-          ModellingRule: Optional
-          Value: 2
     - Name: Method
       Type: BaseDataVariableType
       DataType: String
@@ -303,18 +314,10 @@ Children:
           Type: DynamicLink
           DataType: NodePath
           Value: "../../../DialogID"
-  - Name: Modal
-    Type: BaseDataVariableType
-    DataType: Boolean
-    ModellingRule: Optional
   - Name: MoveTarget
     Type: NodePointer
     DataType: NodeId
     Children:
-    - Name: Kind
-      Type: PropertyType
-      DataType: NodeId
-      Value: "/Types/ObjectTypes/BaseObjectType/BaseUIObject/Item/Container"
     - Name: DynamicLink
       Type: DynamicLink
       DataType: NodePath
